@@ -1,44 +1,46 @@
 `include "tb.sv"
-`include "updown-counter.sv"
+`include "bit_serial_adder.sv"
 
 `timescale 1ns / 1ns
-
 
 module top;
 
 
-    logic clk;
-    logic rst_n; 
-    logic en;
-    logic m;
-    logic load;
-    logic [7:0] data_in; 
-    logic [7:0] count;
+     logic clk;
+     logic rst_n;
+     logic load;
+     logic start;
+     logic [3:0]  A;
+     logic [3:0]  B;
+     logic [3:0]  sum;
+     logic  done;
 
 
-   
-    updown_counter DUT (
-    .clk        (clk),
-    .rst_n      (rst_n),
-    .en         (en),
-    .m          (m),
-    .load       (load),
-    .data_in    (data_in),
-    .count      (count)
+bit_serial_adder dut (
+    .clk      (clk),
+    .rst_n    (rst_n),
+    .load     (load),
+    .start    (start),
+    .A        (A),
+    .B        (B),
+    .sum      (sum),
+    .done     (done)
 );
-
-
 
 
 test tb (
     .clk      (clk),
     .rst_n    (rst_n),
-    .en       (en),
-    .m        (m),
     .load     (load),
-    .din      (data_in),
-    .count    (count)
+    .start    (start),
+    .A        (A),
+    .B        (B),
+    .sum      (sum),
+    .done     (done)
 );
+
+
+
 
 
 initial begin 
